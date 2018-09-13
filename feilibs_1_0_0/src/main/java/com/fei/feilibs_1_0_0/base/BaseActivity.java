@@ -3,7 +3,6 @@ package com.fei.feilibs_1_0_0.base;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -11,7 +10,7 @@ import android.view.View;
  * 所有Activity的基类 进行一些通用化的操作
  * @author fei
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends RxBusBaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

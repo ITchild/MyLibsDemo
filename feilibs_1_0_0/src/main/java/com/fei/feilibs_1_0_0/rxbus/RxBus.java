@@ -72,7 +72,6 @@ public class RxBus {
         }
     }
 
-
     /**
      * 确定接收消息的类型
      * @param aClass
