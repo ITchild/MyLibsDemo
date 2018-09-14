@@ -1,7 +1,6 @@
 package com.fei.feilibs_1_0_0.rxbus;
 
 import java.util.HashMap;
-import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -14,11 +13,12 @@ import io.reactivex.subjects.Subject;
 
 /**
  * RxBus的核心类
+ *
+ * @author fei
  */
 public class RxBus {
     private static volatile RxBus instance;
     private final Subject<Object> mBus;
-//    private final FlowableProcessor<Object> mBus;//背压测试
     /**
      * 保存订阅后的disposable
      *
@@ -26,10 +26,6 @@ public class RxBus {
      * @param disposable
      */
     private HashMap<String, CompositeDisposable> mSubscriptionMap;
-/**背压测试*/
-/*    private RxBus(){
-                mBus = PublishProcessor.create().toSerialized();
-    }*/
 
     /**
      * 默认私有化构造函数
@@ -58,30 +54,10 @@ public class RxBus {
      * 这个地方是再添加订阅的地方。最好创建一个新的类用于数据的传递
      */
     public void post(@NonNull Object obj) {
-        if (mBus.hasObservers()) {//判断当前是否已经添加订阅
+        if (null != mBus && mBus.hasObservers()) {//判断当前是否已经添加订阅
             mBus.onNext(obj);
         }
     }
-
-    /**
-     * 这个是传递集合如果有需要的话你也可以进行更改
-     */
-    public void post(@NonNull List<Object> obj) {
-        if (mBus.hasObservers()) {//判断当前是否已经添加订阅
-            mBus.onNext(obj);
-        }
-    }
-
-    /**
-     * 确定接收消息的类型
-     * @param aClass
-     * @param <T>
-     * @return
-     * 下面为背压使用方式
-     */
-/*    public <T> Flowable<T> toFlowable(Class<T> aClass) {
-        return mBus.ofType(aClass);
-    }*/
 
     /**
      * 注册，传递tClass的时候最好创建一个封装的类。这对数据的传递作用
@@ -94,6 +70,12 @@ public class RxBus {
                 .subscribe(consumer);
     }
 
+    /**
+     * 添加订阅
+     *
+     * @param o
+     * @param disposable
+     */
     public void addSubscription(Object o, Disposable disposable) {
         if (mSubscriptionMap == null) {
             mSubscriptionMap = new HashMap<>();

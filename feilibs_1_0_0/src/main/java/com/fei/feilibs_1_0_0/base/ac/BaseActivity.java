@@ -1,10 +1,13 @@
-package com.fei.feilibs_1_0_0.base;
+package com.fei.feilibs_1_0_0.base.ac;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.fei.feilibs_1_0_0.utils.StringUtil;
 
 /**
  * 所有Activity的基类 进行一些通用化的操作
@@ -99,6 +102,33 @@ public abstract class BaseActivity extends RxBusBaseActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * 判断字符串是否为null或空字符
+     * @param str
+     * @return
+     */
+    protected boolean isStrEmpty(String str){
+        return StringUtil.isEmpty(str);
+    }
+
+    /**
+     * 得到资源文件中的String字符串
+     * @param res
+     * @return
+     */
+    protected String getStr(int res){
+        return getResources().getString(res);
+    }
+
+    /**
+     * 获取资源文件中的颜色值
+     * @param res
+     * @return
+     */
+    protected int getRColor(int res){
+        return ContextCompat.getColor(this,res);
     }
 
 }
