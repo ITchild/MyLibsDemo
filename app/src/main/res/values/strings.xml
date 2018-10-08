@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyLibsDemo</string>
+    <string name="dialogAc">Dialog类型的Activity</string>
 </resources>

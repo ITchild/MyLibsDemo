@@ -14,7 +14,6 @@ import com.fei.feilibs_1_0_0.utils.StringUtil;
  * @author fei
  */
 public abstract class BaseActivity extends RxBusBaseActivity {
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

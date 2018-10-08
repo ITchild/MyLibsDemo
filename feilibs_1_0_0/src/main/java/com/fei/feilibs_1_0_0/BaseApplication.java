@@ -12,6 +12,10 @@ public abstract class BaseApplication extends Application{
         MyExceptionHandler.create(this,setErrorLogPath());
     }
 
+    /**
+     * 设置程序报错后的错误信息存储路径
+     * @return
+     */
     protected abstract String setErrorLogPath();
 
 }

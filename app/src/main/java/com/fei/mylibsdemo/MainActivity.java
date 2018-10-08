@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.fei.feilibs_1_0_0.bean.RxBusMsgBean;
 import com.fei.feilibs_1_0_0.base.ac.BaseActivity;
 import com.fei.feilibs_1_0_0.rxbus.RxBus;
+import com.fei.mylibsdemo.tabac.TabActivity;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
 
@@ -21,7 +22,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected boolean isBackshow() {
-        return true;
+        return false;
     }
 
     @Override
@@ -34,6 +35,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     protected void initListener() {
         super.initListener();
         main_bt.setOnClickListener(this);
+        findView(R.id.main_dialogAc_bt).setOnClickListener(this);
+        findView(R.id.main_tabAc_bt).setOnClickListener(this);
     }
 
     @Override
@@ -44,6 +47,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 busMsgBean.setWhat(MSG_WHAT);
                 busMsgBean.setMsg("这是RxBus发送的消息");
                 RxBus.getInstance().post(busMsgBean);
+                break;
+            case R.id.main_dialogAc_bt :
+                JumpToAc(DialogActivity.class);
+                break;
+            case R.id.main_tabAc_bt :
+                JumpToAc(TabActivity.class);
                 break;
         }
     }
