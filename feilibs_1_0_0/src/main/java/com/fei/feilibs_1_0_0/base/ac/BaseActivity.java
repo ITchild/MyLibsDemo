@@ -17,11 +17,19 @@ public abstract class BaseActivity extends RxBusBaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        actionBeforSetContentView(savedInstanceState);
         setContentView(initLayout());
         showActionBarBack();//ActionBar的Back初始化
         initView();
         initData();
         initListener();
+    }
+
+    /**
+     *（在Activity的setContentView之前的一些处理）
+     */
+    protected void actionBeforSetContentView(Bundle savedInstanceState){
+
     }
 
     /**
