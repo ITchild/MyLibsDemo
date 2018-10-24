@@ -45,10 +45,11 @@ public class TabHomeFragment extends BaseFragment {
                 .baseUrl("http://gank.io/api/data/")
                 .url("福利/10/1")
                 .build();
-        client.get(new OnResultListener<String>() {
+        client.post(new OnResultListener<String>() {
 
             @Override
             public void onSuccess(String result) {
+                home_showNet_tv.setText(result);
                 Logger.i(result);
             }
 

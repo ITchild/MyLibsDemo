@@ -109,21 +109,27 @@ public class HttpClient {
 
 
     public void get(final OnResultListener onResultListener) {
-        Builder builder = mBuilder;
-        if (!builder.params.isEmpty()) {
+        Builder builder = getUrl(mBuilder);
+        mCall = retrofit.create(ApiService.class).executeGet(builder.url);
+        putCall(builder, mCall);
+        request(builder, onResultListener);
+    }
+
+
+
+    private Builder getUrl(Builder mBuilder){
+        if (!mBuilder.params.isEmpty()) {
             String value = "";
-            for (Map.Entry<String, String> entry : builder.params.entrySet()) {
+            for (Map.Entry<String, String> entry : mBuilder.params.entrySet()) {
                 String mapKey = entry.getKey();
                 String mapValue = entry.getValue();
                 String span = value.equals("") ? "" : "&";
                 String part = StringUtil.buffer(span, mapKey, "=", mapValue);
                 value = StringUtil.buffer(value, part);
             }
-            builder.url(StringUtil.buffer(builder.url, "?", value));
+            mBuilder.url(StringUtil.buffer(mBuilder.url, "?", value));
         }
-        mCall = retrofit.create(ApiService.class).executeGet(builder.url);
-        putCall(builder, mCall);
-        request(builder, onResultListener);
+        return mBuilder;
     }
 
 

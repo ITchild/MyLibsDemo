@@ -31,4 +31,5 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.0'
 
     implementation project(':feilibs_1_0_0')
+    implementation project(':dimen_lay')
 }
