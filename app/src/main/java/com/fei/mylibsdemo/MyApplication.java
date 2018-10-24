@@ -3,6 +3,7 @@ package com.fei.mylibsdemo;
 import android.os.Environment;
 
 import com.fei.feilibs_1_0_0.BaseApplication;
+import com.fei.feilibs_1_0_0.utils.Utils;
 
 public class MyApplication extends BaseApplication {
     private static MyApplication app;
@@ -11,6 +12,7 @@ public class MyApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         app = this;
+        Utils.init(app);
     }
 
     @Override

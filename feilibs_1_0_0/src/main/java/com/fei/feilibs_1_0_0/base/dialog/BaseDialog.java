@@ -1,5 +1,6 @@
 package com.fei.feilibs_1_0_0.base.dialog;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,7 +8,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
-public abstract class BaseDialog extends RxBusBaseDialog {
+import com.fei.feilibs_1_0_0.bean.RxBusMsgBean;
+import com.fei.feilibs_1_0_0.rxbus.RxBus;
+
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+
+public abstract class BaseDialog extends Dialog {
     protected Context mContext;
 
     protected BaseDialog(@NonNull Context context) {
@@ -80,5 +87,32 @@ public abstract class BaseDialog extends RxBusBaseDialog {
      */
     protected int getRColor(int res) {
         return null != mContext ? ContextCompat.getColor(mContext, res) : 0;
+    }
+
+
+    protected void subScribeRxbus(Context context){
+        Disposable register = RxBus.getInstance().register(RxBusMsgBean.class, new Consumer<RxBusMsgBean>() {
+            @Override
+            public void accept(@NonNull RxBusMsgBean msgBean) {
+                /**这个地方获取到数据。并执行相应的操作*/
+                doRxBus(msgBean);
+            }
+        });
+        RxBus.getInstance().addSubscription(context,register);
+    }
+
+    /**
+     * 数据返回的处理
+     * @param bean
+     */
+    protected void doRxBus(@NonNull RxBusMsgBean bean){
+
+    }
+
+    /**
+     * 取消订阅RxBus
+     */
+    protected void unSubscribeRxBus(Context context){
+        RxBus.getInstance().unSubscribe(context);
     }
 }

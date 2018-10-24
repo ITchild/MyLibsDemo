@@ -71,4 +71,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 break;
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        subScribeRxbus(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unSubscribeRxBus(this);
+    }
 }

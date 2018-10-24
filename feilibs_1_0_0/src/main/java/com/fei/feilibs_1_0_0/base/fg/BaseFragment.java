@@ -1,16 +1,23 @@
 package com.fei.feilibs_1_0_0.base.fg;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fei.feilibs_1_0_0.bean.RxBusMsgBean;
+import com.fei.feilibs_1_0_0.rxbus.RxBus;
 import com.fei.feilibs_1_0_0.utils.StringUtil;
 
-public abstract class BaseFragment extends RxBusBaseFragment {
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+
+public abstract class BaseFragment extends Fragment {
     private View view;
 
     @Nullable
@@ -89,6 +96,28 @@ public abstract class BaseFragment extends RxBusBaseFragment {
      */
     protected int getRColor(int res) {
         return null != getActivity() ? ContextCompat.getColor(getActivity(), res) : 0;
+    }
+
+    protected void subScribeRxbus(Context context){
+        Disposable register = RxBus.getInstance().register(RxBusMsgBean.class, new Consumer<RxBusMsgBean>() {
+            @Override
+            public void accept(@NonNull RxBusMsgBean msgBean) {
+                /**这个地方获取到数据。并执行相应的操作*/
+                doRxBus(msgBean);
+            }
+        });
+        RxBus.getInstance().addSubscription(context,register);
+    }
+
+    /**
+     * 数据返回的处理
+     * @param bean
+     */
+    protected void doRxBus(@NonNull RxBusMsgBean bean){
+
+    }
+    protected void unSubscribeRxBus(Context context){
+        RxBus.getInstance().unSubscribe(context);
     }
 
 }

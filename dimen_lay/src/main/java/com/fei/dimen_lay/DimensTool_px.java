@@ -1,4 +1,4 @@
-package com.fei.feilibs_1_0_0.javatool;
+package com.fei.dimen_lay;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,7 +12,6 @@ import java.io.PrintWriter;
  * 主要用于生成Dimens文件
  **/
 public class DimensTool_px {
-
 
     private final static String WTemplate = "<dimen name=\"x{0}\">{1}px</dimen>\n";
     private final static String HTemplate = "<dimen name=\"y{0}\">{1}px</dimen>\n";
@@ -40,7 +39,7 @@ public class DimensTool_px {
     private int baseW;
     private int baseH;
 //    private String dirStr = "E:\\WorkSpace\\Eshop\\elibrary\\src\\main\\res";//编写自动生成文件的存放地址
-    private String dirStr = "./feilibs_1_0_0/src/main/res";
+    private String dirStr = "./dimen_lay/src/main/res";
     private String supportStr = SUPPORT_DIMESION;
 
     public DimensTool_px(int baseX, int baseY, String supportStr) {
