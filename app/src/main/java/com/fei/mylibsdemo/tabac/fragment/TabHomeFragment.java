@@ -1,19 +1,28 @@
 package com.fei.mylibsdemo.tabac.fragment;
 
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.fei.feilibs_1_0_0.base.fg.BaseFragment;
-import com.fei.feilibs_1_0_0.net.net_http.HttpClient;
 import com.fei.feilibs_1_0_0.net.net_http.OnResultListener;
 import com.fei.mylibsdemo.R;
+import com.fei.mylibsdemo.bean.PicBaseBean;
+import com.fei.mylibsdemo.bean.PicBean;
+import com.fei.mylibsdemo.net.NetClient;
+import com.fei.mylibsdemo.tabac.adapter.PicShowAdapter;
+import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.orhanobut.logger.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TabHomeFragment extends BaseFragment {
 
     private Button home_netTest_bt;
-    private TextView home_showNet_tv;
+    private EasyRecyclerView home_showNet_erv;
+    private PicShowAdapter mShowAdapter;
+    private List<String> data;
 
     @Override
     protected int initLayout() {
@@ -23,7 +32,18 @@ public class TabHomeFragment extends BaseFragment {
     @Override
     protected void initView() {
         home_netTest_bt = findView(R.id.home_netTest_bt);
-        home_showNet_tv = findView(R.id.home_showNet_tv);
+        home_showNet_erv = findView(R.id.home_showNet_erv);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        if(null == data){
+            data = new ArrayList<>();
+        }
+        mShowAdapter = new PicShowAdapter(getContext(),data);
+        home_showNet_erv.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        home_showNet_erv.setAdapter(mShowAdapter);
     }
 
     @Override
@@ -41,25 +61,18 @@ public class TabHomeFragment extends BaseFragment {
      * 进行网络的测试访问
      */
     private void netTest() {
-        HttpClient client = new HttpClient.Builder()
-                .baseUrl("http://gank.io/api/data/")
-                .url("福利/10/1")
-                .build();
-        client.post(new OnResultListener<String>() {
-
+        NetClient.getPic("福利/100/1").post(new OnResultListener<PicBaseBean>() {
             @Override
-            public void onSuccess(String result) {
-                home_showNet_tv.setText(result);
-                Logger.i(result);
+            public void onSuccess(PicBaseBean result) {
+                data.clear();
+                for (PicBean bean : result.getResults()){
+                    data.add(bean.getUrl());
+                }
+                mShowAdapter.setData(data);
             }
 
             @Override
-            public void onError(int code, String message) {
-                Logger.e(message);
-            }
-
-            @Override
-            public void onFailure(String message) {
+            public void onFailure(int code, String message) {
                 Logger.e(message);
             }
         });

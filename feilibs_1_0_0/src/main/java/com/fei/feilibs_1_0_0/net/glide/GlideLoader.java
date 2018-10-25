@@ -16,10 +16,10 @@ import com.fei.feilibs_1_0_0.utils.Utils;
 
 /**
  * @author fei
- * @date on 2018/10/24 0024
+ * @date on 2018/10/25 0025
  * @describe TODO :
  **/
-public class ImageLoader {
+public class GlideLoader {
     /**
      * 默认加载
      */

@@ -99,6 +99,10 @@ public class HttpClient {
         }
     }
 
+    /**
+     * Post请求
+     * @param onResultListener
+     */
     public void post(final OnResultListener onResultListener) {
         Builder builder = mBuilder;
         mCall = retrofit.create(ApiService.class)
@@ -107,7 +111,10 @@ public class HttpClient {
         request(builder, onResultListener);
     }
 
-
+    /**
+     * get请求
+     * @param onResultListener
+     */
     public void get(final OnResultListener onResultListener) {
         Builder builder = getUrl(mBuilder);
         mCall = retrofit.create(ApiService.class).executeGet(builder.url);
@@ -115,8 +122,11 @@ public class HttpClient {
         request(builder, onResultListener);
     }
 
-
-
+    /**
+     * get请求时的URL的拼接
+     * @param mBuilder
+     * @return
+     */
     private Builder getUrl(Builder mBuilder){
         if (!mBuilder.params.isEmpty()) {
             String value = "";
@@ -133,10 +143,14 @@ public class HttpClient {
     }
 
 
+    /**
+     * 真正的网络请求的部分，通过接口返回
+     * @param builder
+     * @param onResultListener
+     */
     private void request(final Builder builder, final OnResultListener onResultListener) {
         if (!NetworkUtils.isConnected()) {
             ToastUtil.showLongToastSafe(R.string.current_internet_invalid);
-            onResultListener.onFailure(Utils.getString(R.string.current_internet_invalid));
             return;
         }
         mCall.enqueue(new Callback<ResponseBody>() {
@@ -151,7 +165,7 @@ public class HttpClient {
                     }
                 }
                 if (!response.isSuccessful() || 200 != response.code()) {
-                    onResultListener.onError(response.code(), response.message());
+                    onResultListener.onFailure(response.code(), response.message());
                 }
                 if (null != builder.tag) {
                     removeCall(builder.url);
@@ -161,7 +175,7 @@ public class HttpClient {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 t.printStackTrace();
-                onResultListener.onFailure(t.getMessage());
+                onResultListener.onFailure(0,t.getMessage());
                 if (null != builder.tag) {
                     removeCall(builder.url);
                 }

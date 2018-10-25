@@ -17,7 +17,7 @@ import retrofit2.http.Url;
  * @date on 2018/10/24 0024
  * @describe TODO :
  **/
-public interface  ApiService {
+public interface ApiService {
     @GET
     Call<ResponseBody> executeGet(@Url String url);
 

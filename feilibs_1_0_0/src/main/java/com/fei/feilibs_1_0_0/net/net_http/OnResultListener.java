@@ -21,15 +21,15 @@ public class OnResultListener<T> {
      * @param code    错误码
      * @param message 错误信息
      */
-    public void onError(int code, String message) {
-    }
+//    public void onError(int code, String message) {
+//    }
 
     /**
      * 请求失败的情况
-     *
+     * @param code    错误码
      * @param message 失败信息
      */
-    public void onFailure(String message) {
+    public void onFailure(int code,String message) {
     }
 
 }

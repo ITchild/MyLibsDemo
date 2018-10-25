@@ -32,4 +32,8 @@ dependencies {
 
     implementation project(':feilibs_1_0_0')
     implementation project(':dimen_lay')
+
+    implementation 'com.jude:easyrecyclerview:4.4.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+
 }
